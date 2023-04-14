@@ -15,16 +15,3 @@ export const pick = (obj, ...fields) => {
   }
   return res;
 };
-
-{
-  /* const object = {
-    age: 30,
-    name: "Dmitriy",
-    id: 4578,
-    isMarried: true,
-  };
-
-  function pick(obj, ...args) {}
-
-  console.log(pick(object, "age", "id", "name")); */
-}
