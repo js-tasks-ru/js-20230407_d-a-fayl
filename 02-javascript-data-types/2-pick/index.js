@@ -6,11 +6,10 @@
  */
 export const pick = (obj, ...fields) => {
   const res = {};
-  const arrayWithArgs = fields;
 
-  for (let i = 0; i < arrayWithArgs.length; i++) {
-    if (arrayWithArgs[i] in obj) {
-      res[arrayWithArgs[i]] = obj[arrayWithArgs[i]];
+  for (let key in fields) {
+    if (fields[key] in obj) {
+      res[fields[key]] = obj[fields[key]];
     }
   }
   return res;
