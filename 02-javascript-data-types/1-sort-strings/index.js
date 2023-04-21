@@ -5,12 +5,23 @@
  * @returns {string[]}
  */
 export function sortStrings(arr, param = "asc") {
-  let res = [...arr];
+  const directions = {
+    asc: 1,
+    desc: -1,
+  };
+  const direction = directions[param];
 
-  res.sort((a, b) => a.localeCompare(b, ["ru", "en"], { caseFirst: "upper" }));
-
-  if (param === "desc") {
-    res.reverse();
+  if (!Array.isArray(arr)) {
+    throw new Error(
+      "This function waits for array only. Please, check your first argument!"
+    );
+  } else if (typeof direction === "undefined") {
+    throw new Error(
+      'This function waits for param with value "desc" or "asc" only'
+    );
   }
-  return res;
+
+  return [...arr].sort((a, b) => {
+    return direction * a.localeCompare(b, ["ru", "en"], { caseFirst: "upper" });
+  });
 }
