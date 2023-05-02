@@ -64,11 +64,6 @@ export default class SortableTable {
     const cells = this.headerConfig.map(({ id, template }) => {
       return { id: id, template: template };
     });
-
-    console.log(cells);
-
-    console.log(product);
-
     return cells
       .map(({ id, template }) => {
         return template
@@ -88,10 +83,6 @@ export default class SortableTable {
     const currentColumn = this.element.querySelector(
       `.sortable-table__cell[data-id=${field}]`
     );
-
-    console.dir(allColumns);
-    console.dir(currentColumn);
-
     allColumns.forEach((column) => {
       column.dataset.order = "";
     });
@@ -124,9 +115,7 @@ export default class SortableTable {
     for (const subElement of elements) {
       const name = subElement.dataset.element;
       result[name] = subElement;
-      console.dir(subElement);
     }
-    console.log(result);
 
     return result;
   }
