@@ -63,9 +63,9 @@ export default class ColumnChart {
     for (const subElement of elements) {
       const name = subElement.dataset.element;
       result[name] = subElement;
-      console.dir(subElement);
+      //console.dir(subElement);
     }
-    console.log(result);
+    //console.log(result);
 
     return result;
   }
@@ -110,4 +110,47 @@ export default class ColumnChart {
     this.element = {};
     this.subElements = {};
   }
+}
+
+{
+  class BaseComponent {
+    static color = "red";
+    constructor() {
+      this.bar = "title";
+    }
+
+    render() {
+      console.log("parent render");
+    }
+    destroy() {}
+    foo() {
+      console.log("parent foo");
+    }
+  }
+
+  class ComponentChild extends BaseComponent {
+    constructor() {
+      super();
+      this.title = "title";
+    }
+
+    foo() {
+      console.log("child foo");
+    }
+    render() {
+      console.log("child render");
+      super.render();
+    }
+  }
+
+  const obj2 = new ComponentChild();
+  const obj1 = new BaseComponent();
+  console.log(obj1);
+  console.log(obj2);
+
+  console.log(BaseComponent.color);
+  console.log(ComponentChild.color);
+
+  obj2.foo();
+  obj2.render();
 }
