@@ -27,8 +27,6 @@ export default class SortableTable {
 
       this.subElements.body.innerHTML = this.getTableRows(sortedData);
     }
-
-    return column;
   };
 
   constructor(headersConfig, { data = [], sorted = {} } = {}) {
