@@ -21,7 +21,7 @@ export default class SortableTable {
 
   getTable() {
     return `
-      <div class="sortable-table"> 
+      <div class="sortable-table">
       ${this.getTableHeader()}
       ${this.getTableBody()}     
       </div>
@@ -64,6 +64,7 @@ export default class SortableTable {
     const cells = this.headerConfig.map(({ id, template }) => {
       return { id: id, template: template };
     });
+    console.log(cells);
     return cells
       .map(({ id, template }) => {
         return template

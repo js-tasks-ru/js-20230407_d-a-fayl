@@ -14,3 +14,27 @@ export const omit = (obj, ...fields) => {
   }
   return res;
 };
+
+// ------------------------------------- немного теории про объекты и поверхностное копирование через "..."
+{
+  const obj = {
+    color: "green",
+    size: "big",
+    props: {
+      weight: 2,
+      height: 4,
+    },
+  };
+  function changeObject(data) {
+    const copy = { ...data };
+    copy.size = "small";
+    copy.props.weight = "5";
+
+    // ... - это поверхностное копирование, т.е. не мутируется только верхний уровень исходного объекта
+    // вложенные объекты мутируются
+
+    return copy;
+  }
+  console.log(changeObject(obj));
+  console.log(obj);
+}

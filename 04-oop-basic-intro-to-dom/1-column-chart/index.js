@@ -112,7 +112,60 @@ export default class ColumnChart {
   }
 }
 
+// потренируюсь с прототипным наследованием и прочей ботвой
 {
+  class MyComponent {
+    firstProp = 50;
+
+    constructor() {
+      // this = {} неявно
+      // this.title = 'title'
+      // ... и дальнейшая модификация this
+      // return this неявно
+
+      this.title = "title"; //запишется на инстанс (экземпляр класса). Т.е. это собственные свойства объекта myObject
+    }
+
+    render() {
+      console.log("parent render");
+    }
+    destroy() {}
+    //эти методы записываются на прототип myObject, т.е. на класс MyCmponent
+  }
+  const myObject = new MyComponent();
+  /* 
+    
+    При создании экземпляра класса мы получаем цепочку из ДВУХ прототипов: 
+      1йы - это прототип, созданный при вызове new MyComponent(). 
+      Т.е. сам класс при объявлении создает функцию MyComponent(). Она возвращает объект myObject при помощи new.
+      Создается простотип, куда складываются методы класса в св-во prototype: MyComponent.prototype = render;
+      2ой - это глобальный объект Object
+  
+  */
+
+  console.log(myObject);
+  console.log(MyComponent.prototype);
+
+  class MyComponentChild extends MyComponent {
+    constructor() {
+      super();
+      this.newTitle = "one more title";
+    }
+
+    foo() {
+      console.log("child foo");
+    }
+  }
+  const myChildObject = new MyComponentChild();
+  console.log(myChildObject);
+  myChildObject.render();
+
+  //это антипаттерн. НЕЛЬЗЯ мутировать самый главный прототип, т.к. это свойство будет доступно для ВСЕХ потомков
+  /* Object.prototype.foo = "foo";
+  console.log(myObject.foo); */
+}
+
+/* {
   class BaseComponent {
     static color = "red";
     constructor() {
@@ -154,3 +207,16 @@ export default class ColumnChart {
   obj2.foo();
   obj2.render();
 }
+
+{
+  //если функция принимает в качестве параметров более трех аргументов,
+  // то лучше передавать эти агрументы объектом
+  // будет очень элегантно сделать сразу деструктуризацию
+  function sum({ a = 1, d = 4, c = 1, b = 0 }) {
+    //return a + b
+    return c + b;
+    return a + d;
+  }
+
+  console.log(sum({ a: 5, c: 8, d: 11 }));
+} */

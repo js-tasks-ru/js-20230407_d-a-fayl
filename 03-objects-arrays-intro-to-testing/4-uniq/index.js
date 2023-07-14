@@ -16,3 +16,18 @@ export function uniq(arr) {
 
   return res;
 }
+
+{
+  const obj = {
+    0: 1,
+    1: 2,
+    3: 3,
+    length: 3,
+  };
+
+  /* for (const item of obj) {
+    console.log(item);
+  } */
+
+  console.log(Array.from(obj));
+}

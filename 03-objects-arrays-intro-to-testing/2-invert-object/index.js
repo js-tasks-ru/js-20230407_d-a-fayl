@@ -9,6 +9,7 @@ export function invertObj(obj) {
   } else if (!Object.keys(obj).length) {
     return {};
   }
+
   const res = {};
   const propsArray = Object.entries(obj);
   for (const arr of propsArray) {
