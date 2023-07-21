@@ -138,17 +138,26 @@ export default class ColumnChart {
     При создании экземпляра класса мы получаем цепочку из ДВУХ прототипов: 
       1йы - это прототип, созданный при вызове new MyComponent(). 
       Т.е. сам класс при объявлении создает функцию MyComponent(). Она возвращает объект myObject при помощи new.
-      Создается простотип, куда складываются методы класса в св-во prototype: MyComponent.prototype = render;
+      Создается прототип, куда складываются методы класса в св-во prototype: MyComponent.prototype = render;
       2ой - это глобальный объект Object
   
   */
 
   console.log(myObject);
-  console.log(MyComponent.prototype);
+  console.log(myObject.constructor);
+
+  // юзай исключительно для отладки (не все браузеры поймут)
+  // свойство не стандартизировано. Не все среды его поймут
+  console.log(myObject.__proto__); //строка ниже идентична
+
+  console.log(MyComponent.prototype); //строка ниже идентична
+  console.log(myObject.constructor.prototype);
+  console.log(Object.getPrototypeOf(myObject));
+  console.log(myObject.constructor === MyComponent); //true
 
   class MyComponentChild extends MyComponent {
     constructor() {
-      super();
+      super(); //дает доступ к this в данном классе
       this.newTitle = "one more title";
     }
 
@@ -162,7 +171,7 @@ export default class ColumnChart {
 
   //это антипаттерн. НЕЛЬЗЯ мутировать самый главный прототип, т.к. это свойство будет доступно для ВСЕХ потомков
   /* Object.prototype.foo = "foo";
-  console.log(myObject.foo); */
+  console.log(myObject); */
 }
 
 /* {
@@ -220,3 +229,31 @@ export default class ColumnChart {
 
   console.log(sum({ a: 5, c: 8, d: 11 }));
 } */
+
+// Object.hasOwn предпочтительнее, нежели object.hasOwnProperty.
+{
+  /* 
+     Вдруг объект был создан без прототипа. Хотя, конечно, вряд ли такое будет на практике)
+  */
+  const obj = {
+    name: "dima",
+    surname: "fail",
+  };
+
+  console.log(obj);
+  console.log(obj.constructor);
+
+  console.log(Object.getPrototypeOf(obj));
+  console.log(Object.prototype);
+  console.log(Object.getPrototypeOf(obj) === Object.prototype); //true
+  console.log(obj.__proto__ === Object.prototype); //true
+
+  console.log(obj.hasOwnProperty("name")); //true
+  console.log(Object.hasOwn(obj, "name")); //true
+
+  const object = Object.create(null); // создал объект без прототипа
+  console.log(object);
+
+  console.log(Object.hasOwn(object, "name")); //false
+  //console.log(object.hasOwnProperty("name")); //Uncaught TypeError: object.hasOwnProperty is not a function
+}

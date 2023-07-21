@@ -11,11 +11,21 @@
   import NotificationMessage from "./index.js";
 
   btn1.addEventListener("pointerdown", () => {
-    const notification = new NotificationMessage("Hello World", {
-      duration: 3000,
+    const notification = new NotificationMessage("Hello", {
+      duration: 10000,
       type: "success",
     });
 
     notification.show();
+  });
+
+  // посмотрим на контекст колбек-стрелки
+  btn1.addEventListener("pointerdown", () => {
+    console.log(this); //undefined
+  });
+
+  // посмотрим на контекст колбек-functionDeclaration
+  btn1.addEventListener("pointerdown", function () {
+    console.log(this); // <button>
   });
 </script>

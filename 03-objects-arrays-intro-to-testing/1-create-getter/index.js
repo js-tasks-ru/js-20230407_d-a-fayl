@@ -127,3 +127,49 @@ export function createGetter(path) {
     то мы не сможем получить  результат вызова getValue(index), т.е. результат ее вызова в самый первый раз
   */
 }
+
+//пара слов о контексте
+{
+  const obj = {
+    color: "blue",
+    getColor() {
+      return this.color;
+    },
+    getColorOneMore: () => {
+      return this.color;
+    }, //у стрелок нет своего контекста и он равен window, в модуле он равен undefined
+  };
+  console.log(obj.getColor()); //blue
+  console.log(obj.getColorOneMore()); //undefined
+
+  //теперь передам метод getColor в др. функцию
+  function log(method) {
+    const res = method();
+    console.log(res);
+  }
+  log(obj.getColor); //undefined
+  log(obj.getColorOneMore); //undefined
+
+  log(obj.getColor.bind(obj)); //blue
+  // obj.getColor.bind(obj) вернет новую функцию в железобетонной связке с контекстом
+}
+
+// ситуация выше, но для apply и bind
+{
+  const obj = {
+    color: "blue",
+    getColor() {
+      return this.color;
+    },
+  };
+  console.log(obj.getColor()); //blue
+
+  //теперь передам метод getColor в др. функцию
+  //функция должна еще принимать контекст в качестве параметра
+  function log(method, context) {
+    const res = method.apply(context);
+    //const res = method.call(context);
+    console.log(res);
+  }
+  log(obj.getColor, obj); //blue
+}
